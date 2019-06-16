@@ -22,7 +22,7 @@ services:
       - 'meest'
     depends_on:
       - mongo
-    command: 'bash -c "mongoimport --host mongo --db meest --collection users --type json --file /mongo-seed/users.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin && mongoimport --host mongo --db meest --collection meetings --type json --file /mongo-seed/meetings.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin"'
+    command: 'bash -c "mongoimport --host mongo --db meest --collection users --type json --file /mongo-seed/users.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin && mongoimport --host mongo --db meest --collection meetings --type json --file /mongo-seed/meetings.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin && mongoimport --host mongo --db meest --collection organizations --type json --file /mongo-seed/organizations.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin && mongoimport --host mongo --db meest --collection meetings --type json --file /mongo-seed/meetings.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin"'
   meest:
     build:
       context: .

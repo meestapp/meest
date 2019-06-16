@@ -1,10 +1,9 @@
-const bodyParser = require('body-parser');
 const users = require('./users');
-
-const jsonParser = bodyParser.json();
+const meetings = require('./meetings');
 
 module.exports = (app) => {
-  app.use('/users/', jsonParser, users);
+  app.use('/users/', users);
+  app.use('/meetings/', meetings);
 
   // Error handlers
   // 404 error handler

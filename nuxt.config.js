@@ -21,6 +21,23 @@ module.exports = {
    */
   router: {
     linkExactActiveClass: 'is-active',
+    middleware: ['auth'],
+  },
+  /*
+   ** Auth customizations
+  */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/users/login', method: 'post', propertyName: 'user.token' },
+          logout: { url: '/api/users/logout', method: 'post' },
+          user: { url: '/api/users/me', method: 'get', propertyName: 'user' },
+        },
+        tokenRequired: true,
+        tokenType: 'Bearer',
+      },
+    },
   },
   /*
    ** Server customizations

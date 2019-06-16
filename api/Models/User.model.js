@@ -8,15 +8,21 @@ const config = require('../config/index');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  organization: {
+    type: Schema.Types.ObjectId,
+    ref: 'Organization',
+  },
   email: {
     type: String,
     required: true,
   },
   password: {
     type: String,
+    select: false,
   },
   salt: {
     type: String,
+    select: false,
   },
   name: {
     type: String,
@@ -29,6 +35,7 @@ const userSchema = new Schema({
   },
   salary: {
     type: Number,
+    select: false,
   },
 });
 

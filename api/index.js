@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-sequences */
+/* eslint-disable global-require */
 require('./auth/passport');
 
 const bodyParser = require('body-parser');
@@ -10,6 +13,9 @@ const db = new Database();
 
 const start = async () => {
   await db.connect();
+  require('./Models/User.model');
+  require('./Models/Meeting.model'),
+  require('./Models/Organization.model');
   app.use(bodyParser.json());
   require('./routes.js')(app); // eslint-disable-line
 };

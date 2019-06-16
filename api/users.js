@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 
 const auth = require('./auth/auth');
+const utils = require('./auth/utils');
 const User = require('./Models/User.model');
 
 const router = express.Router();
@@ -24,9 +25,9 @@ router.post('/setpassword', async () => {
 });
 
 router.post('/login', auth.optional, (req, res, next) => {
-  const { body: { user } } = req;
+  const { body: { email, password } } = req;
 
-  if (!user.email) {
+  if (!email) {
     return res.status(422).json({
       errors: {
         email: 'is required',
@@ -34,7 +35,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
-  if (!user.password) {
+  if (!password) {
     return res.status(422).json({
       errors: {
         password: 'is required',
@@ -56,6 +57,16 @@ router.post('/login', auth.optional, (req, res, next) => {
 
     return res.status(400).json({ info });
   })(req, res, next);
+});
+
+router.get('/me', auth.required, async (req, res) => {
+  try {
+    const token = utils.getTokenFromHeaders(req);
+    const user = await utils.getUserByToken(token);
+    return res.send({ user });
+  } catch (e) {
+    return res.status(401).send(e.message);
+  }
 });
 
 module.exports = router;

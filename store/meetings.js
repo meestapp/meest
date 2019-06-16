@@ -8,6 +8,7 @@ const SET_DRAFT_PARTICIPANT = 'SET_DRAFT_PARTICIPANT';
 const UNSET_DRAFT_PARTICIPANT = 'UNSET_DRAFT_PARTICIPANT';
 const DELETE_DRAFT = 'DELETE_DRAFT';
 const SET_MEETING = 'SET_MEETING';
+const SET_MY_MEETINGS = 'SET_MY_MEETINGS';
 
 export const state = () => ({
   meetings: [],
@@ -42,6 +43,9 @@ export const mutations = {
   [SET_MEETING](state, meeting) {
     state.meetings.unshift(meeting);
   },
+  [SET_MY_MEETINGS](state, meetings) {
+    Vue.set(state, 'meetings', meetings);
+  },
 };
 
 export const actions = {
@@ -62,11 +66,26 @@ export const actions = {
   },
   async newMeetingFromDraft({ state, commit, dispatch }) {
     const { draft } = state;
-    draft.id = Math.floor(Math.random() * 1000);
     draft.startedAt = (new Date()).getTime();
-    draft.finishedAt = 0;
+    const newMeetingId = await this.$axios.$post('/api/meetings/', {
+      meeting: {
+        ...draft,
+      },
+    });
     commit(SET_MEETING, draft);
     dispatch('deleteDraft');
-    return draft.id;
+    return newMeetingId;
+  },
+  async getMyMeetings({ commit }) {
+    const { meetings } = await this.$axios.$get('/api/meetings');
+    if (meetings.length === 0) return [];
+    commit(SET_MY_MEETINGS, meetings);
+    return meetings;
+  },
+  // eslint-disable-next-line no-unused-vars
+  async getMeeting({ commit }, meetingId) {
+    console.log(meetingId);
+    const { meeting } = await this.$axios.$get(`/api/meetings/${meetingId}`);
+    return meeting;
   },
 };

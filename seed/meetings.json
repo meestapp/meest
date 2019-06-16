@@ -1,0 +1,3 @@
+[
+  {"_id":{"$oid":"5d06bfec15800f02e286c4c4"},"participants":[{"$oid":"5d0676e33f5bff169771f4d7"},{"$oid":"5d0677bbf472ff16ea5207e4"},{"$oid":"5d0677eef472ff16ea5207e7"}],"startedAt":{"$numberLong":"1560723370047"},"finishedAt":{"$numberLong":"1560723380047"},"value":{"$numberDouble":"12.5"},"title":"This is our first ever meeting","description":"#### Maybe hello world!","record":"#### This is the output of the meeting","organizer":{"$oid":"5d0676e33f5bff169771f4d7"},"organization":{"$oid":"5d06bc184fbf2128da14a115"},"log":[],"__v":{"$numberInt":"0"}}
+]
