@@ -6,8 +6,8 @@
       </p>
       <ul class="menu-list">
         <li><nuxt-link to="/">Dashboard</nuxt-link></li>
-        <li><nuxt-link to="new-meeting">New Meeting</nuxt-link></li>
-        <li><nuxt-link to="meeting-book">Meeting Book</nuxt-link></li>
+        <li><nuxt-link to="/new-meeting">New Meeting</nuxt-link></li>
+        <li><nuxt-link to="/meeting-book">Meeting Book</nuxt-link></li>
       </ul>
       <p class="menu-label">
         Administration

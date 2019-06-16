@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+  mongo:
+    image: 'mongo:latest'
+    restart: always
+    volumes:
+      - 'mongo_data:/data/db'
+    networks:
+      - 'meest'
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: meest-db-admin
+      MONGO_INITDB_ROOT_PASSWORD: n5xvt8FusGMgceYTD3DpBHTf
+      MONGO_INITDB_DATABASE: admin 
+  mongo-seed:
+    image: mongo:latest
+    volumes:
+      - './seed:/mongo-seed'
+    networks:
+      - 'meest'
+    depends_on:
+      - mongo
+    command: 'bash -c "mongoimport --host mongo --db meest --collection users --type json --file /mongo-seed/users.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin && mongoimport --host mongo --db meest --collection meetings --type json --file /mongo-seed/meetings.json --jsonArray --mode=upsert -u meest-db-admin -p n5xvt8FusGMgceYTD3DpBHTf --authenticationDatabase admin"'
+  meest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run dev 
+    volumes:
+      - '.:/usr/src/meest'
+      - '/usr/src/meest/node_modules'
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo 
+    networks:
+      - 'meest'
+    environment:
+      NODE_ENV: development
+    
+volumes:
+  mongo_data: {}
+
+networks:
+  meest: {}
+    

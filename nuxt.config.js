@@ -23,6 +23,16 @@ module.exports = {
     linkExactActiveClass: 'is-active',
   },
   /*
+   ** Server customizations
+   */
+  server: {
+    host: '0.0.0.0',
+  },
+  /**
+   * Server middleware
+   */
+  serverMiddleware: ['~/api/index.js'],
+  /*
    ** Customize the progress-bar color
    */
   loading: { color: '#fff' },
@@ -37,6 +47,7 @@ module.exports = {
    */
   plugins: [
     '~/plugins/fontawesome.js',
+    '~/plugins/marked.client.js',
   ],
   /*
    ** Nuxt.js modules
@@ -46,6 +57,7 @@ module.exports = {
     '@nuxtjs/bulma',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',
   ],
