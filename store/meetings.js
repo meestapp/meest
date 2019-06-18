@@ -6,6 +6,7 @@ const SET_DRAFT_TITLE = 'SET_DRAFT_TITLE';
 const SET_DRAFT_DESCRIPTION = 'SET_DRAFT_DESCRIPTION';
 const SET_DRAFT_PARTICIPANT = 'SET_DRAFT_PARTICIPANT';
 const UNSET_DRAFT_PARTICIPANT = 'UNSET_DRAFT_PARTICIPANT';
+const SET_DRAFT_TAGS = 'SET_DRAFT_TAGS';
 const DELETE_DRAFT = 'DELETE_DRAFT';
 const SET_MEETING = 'SET_MEETING';
 const SET_MY_MEETINGS = 'SET_MY_MEETINGS';
@@ -16,6 +17,7 @@ export const state = () => ({
     title: '',
     description: '',
     participants: [],
+    tags: [],
   },
 });
 
@@ -37,8 +39,16 @@ export const mutations = {
       state.draft.participants.findIndex(element => element === participant),
     );
   },
+  [SET_DRAFT_TAGS](state, tags) {
+    state.draft.tags = tags;
+  },
   [DELETE_DRAFT](state) {
-    Vue.set(state, 'draft', {});
+    Vue.set(state, 'draft', {
+      title: '',
+      description: '',
+      participants: [],
+      tags: [],
+    });
   },
   [SET_MEETING](state, meeting) {
     state.meetings.unshift(meeting);
@@ -61,31 +71,45 @@ export const actions = {
   unsetDraftParticipant({ commit }, participant) {
     commit(UNSET_DRAFT_PARTICIPANT, participant);
   },
+  setDraftTags({ commit }, tags) {
+    commit(SET_DRAFT_TAGS, tags);
+  },
   deleteDraft({ commit }) {
     commit(DELETE_DRAFT);
   },
-  async newMeetingFromDraft({ state, commit, dispatch }) {
+  async newMeetingFromDraft({ state, dispatch }) {
     const { draft } = state;
-    draft.startedAt = (new Date()).getTime();
-    const newMeetingId = await this.$axios.$post('/api/meetings/', {
-      meeting: {
-        ...draft,
-      },
-    });
-    commit(SET_MEETING, draft);
-    dispatch('deleteDraft');
-    return newMeetingId;
+    const draftToSave = Object.assign({}, draft);
+    draftToSave.startedAt = (new Date()).getTime();
+    draftToSave.tags = draftToSave.tags.map(tag => tag.text);
+    try {
+      const newMeetingId = await this.$axios.$post('/api/meetings/', {
+        meeting: {
+          ...draftToSave,
+        },
+      });
+      dispatch('deleteDraft');
+      return newMeetingId;
+    } catch (e) {
+      throw e;
+    }
   },
   async getMyMeetings({ commit }) {
-    const { meetings } = await this.$axios.$get('/api/meetings');
-    if (meetings.length === 0) return [];
-    commit(SET_MY_MEETINGS, meetings);
-    return meetings;
+    try {
+      const { meetings } = await this.$axios.$get('/api/meetings');
+      commit(SET_MY_MEETINGS, meetings);
+      return meetings;
+    } catch (e) {
+      throw e;
+    }
   },
   // eslint-disable-next-line no-unused-vars
   async getMeeting({ commit }, meetingId) {
-    console.log(meetingId);
-    const { meeting } = await this.$axios.$get(`/api/meetings/${meetingId}`);
-    return meeting;
+    try {
+      const { meeting } = await this.$axios.$get(`/api/meetings/${meetingId}`);
+      return meeting;
+    } catch (e) {
+      throw e;
+    }
   },
 };

@@ -13,7 +13,7 @@ router.get('/', auth.required, async (req, res, next) => {
     const myself = await User.findOne({ email: userEmail })
       .populate('organization');
     const myMeetings = await Meeting.find({ organization: myself.organization._id })
-      .select('-description -record -log')
+      .select('-record -log')
       .populate('organizer')
       .populate('participants')
       .populate('log.participant');

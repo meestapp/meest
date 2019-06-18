@@ -36,6 +36,11 @@ export default {
       'employees',
     ]),
   },
+  watch: {
+    participants() {
+      this.checkedParticipants = this.participants;
+    },
+  },
   mounted() {
     this.getMyEmployees();
     this.checkedParticipants = this.participants;

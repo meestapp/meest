@@ -47,6 +47,10 @@
           @checked="setDraftParticipant"
           @unchecked="unsetDraftParticipant"
         />
+        <TagsInput
+          :tags="draft.tags"
+          @changed="setDraftTags"
+        />
         <div class="column is-full">
           <a
             class="button is-primary"
@@ -62,12 +66,14 @@
 import { mapState, mapActions } from 'vuex';
 import MarkdownEditor from '~/components/MarkdownEditor.vue';
 import Participants from '~/components/Participants.vue';
+import TagsInput from '~/components/TagsInput.vue';
 
 export default {
   name: 'NewMeeting',
   components: {
     MarkdownEditor,
     Participants,
+    TagsInput,
   },
   computed: {
     ...mapState('meetings', [
@@ -80,6 +86,7 @@ export default {
       'setDraftDescription',
       'setDraftParticipant',
       'unsetDraftParticipant',
+      'setDraftTags',
       'deleteDraft',
       'newMeetingFromDraft',
     ]),

@@ -2,7 +2,7 @@
   <div>
     <Navbar />
     <div class="columns is-fullheight">
-      <SideMenu />
+      <SideMenu class="is-hidden-touch" />
       <nuxt />
     </div>
   </div>

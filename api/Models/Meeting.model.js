@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
@@ -17,6 +18,9 @@ const meetingSchema = new Schema({
   description: {
     type: String,
   },
+  excerpt: {
+    type: String,
+  },
   participants: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
@@ -33,6 +37,9 @@ const meetingSchema = new Schema({
     type: Number,
     default: 0,
   },
+  tags: [{
+    type: String,
+  }],
   record: {
     type: String,
   },
@@ -45,6 +52,16 @@ const meetingSchema = new Schema({
       ref: 'User',
     },
   }],
+});
+
+// eslint-disable-next-line prefer-arrow-callback
+meetingSchema.pre('save', function (next) {
+  if (this.description.length > 0) {
+    this.excerpt = `${this.description.substring(0, 50)}...`;
+  } else {
+    this.excerpt = this.description;
+  }
+  next();
 });
 
 module.exports = mongoose.model('Meeting', meetingSchema);

@@ -49,6 +49,11 @@ export default {
       `;
     },
   },
+  watch: {
+    mdInput() {
+      this.input = this.mdInput;
+    },
+  },
   beforeMount() {
     this.input = this.mdInput;
   },

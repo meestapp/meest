@@ -37,7 +37,7 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item is-hidden-touch">
           <div class="buttons">
             <nuxt-link to="new-meeting" class="button is-primary">
               <font-awesome-icon icon="plus" style="margin-right: 5px;"/>
@@ -45,6 +45,12 @@
             </nuxt-link>
           </div>
         </div>
+      </div>
+
+      <div class="side-nav__extra is-hidden-desktop">
+        <nuxt-link class="navbar-item" to="/">Dashboard</nuxt-link>
+        <nuxt-link class="navbar-item" to="/new-meeting">New Meeting</nuxt-link>
+        <nuxt-link class="navbar-item" to="/meeting-book">Meeting Book</nuxt-link>
       </div>
     </div>
   </nav>

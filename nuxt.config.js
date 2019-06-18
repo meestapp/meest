@@ -65,6 +65,8 @@ module.exports = {
   plugins: [
     '~/plugins/fontawesome.js',
     '~/plugins/marked.client.js',
+    { src: '~/plugins/vue-tags-input.client.js', mode: 'client' },
+    { src: '~/plugins/vuex-persist.client.js', mode: 'client' },
   ],
   /*
    ** Nuxt.js modules
