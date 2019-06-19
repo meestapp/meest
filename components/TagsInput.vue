@@ -42,27 +42,27 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $turquoise: hsl(171, 100%, 41%);
 $red: hsl(348, 100%, 61%);
 
 .vue-tags-input {
   max-width: 100% !important;
 }
-.ti-input {
+.vue-tags-input /deep/ .ti-input {
   border-color: $turquoise !important;
   border-radius: 4px;
   box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
 }
-.ti-input:active, .ti-input:focus {
+.vue-tags-input /deep/ .ti-input:active, .ti-input:focus {
   box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
 }
-.vue-tags-input .ti-tag {
+.vue-tags-input /deep/ .ti-tag {
   background-color: $turquoise;
   color: white;
   font-weight: 700;
 }
-.vue-tags-input .ti-tag:after {
+.vue-tags-input /deep/ .ti-tag:after {
   background-color: $red !important;
 }
 </style>
