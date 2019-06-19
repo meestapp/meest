@@ -30,6 +30,9 @@ const userSchema = new Schema({
   lastName: {
     type: String,
   },
+  displayName: {
+    type: String,
+  },
   team: {
     type: String,
   },
